@@ -1,80 +1,3 @@
-function reverseString(value) {
-  return value.split("").reverse().join("");
-}
-
-function calculateFactorial(number) {
-  let result = 1;
-
-  for (let index = 2; index <= number; index += 1) {
-    result *= index;
-  }
-
-  return result;
-}
-
-function isPrime(number) {
-  if (number < 2) {
-    return false;
-  }
-
-  for (let divisor = 2; divisor * divisor <= number; divisor += 1) {
-    if (number % divisor === 0) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function countVowels(text) {
-  const matches = text.match(/[aeiou]/gi);
-  return matches ? matches.length : 0;
-}
-
-function capitalizeWords(sentence) {
-  return sentence
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-function findLargestNumber(numbers) {
-  return Math.max(...numbers);
-}
-
-function removeDuplicates(numbers) {
-  return [...new Set(numbers)];
-}
-
-function flattenArray(values) {
-  return values.flat(Infinity);
-}
-
-function calculateAverage(numbers) {
-  const total = numbers.reduce((sum, current) => sum + current, 0);
-  return total / numbers.length;
-}
-
-function buildFibonacciSequence(limit) {
-  const sequence = [0, 1];
-
-  while (
-    sequence[sequence.length - 1] + sequence[sequence.length - 2] <=
-    limit
-  ) {
-    sequence.push(
-      sequence[sequence.length - 1] + sequence[sequence.length - 2],
-    );
-  }
-
-  return sequence;
-}
-
-function sortNumbersAscending(numbers) {
-  return [...numbers].sort((left, right) => left - right);
-}
-
 function generateOutput(label, value) {
   return {
     label,
@@ -82,216 +5,479 @@ function generateOutput(label, value) {
   };
 }
 
+function toNumber(value) {
+  return Number(value);
+}
+
+function toStringValue(value) {
+  return String(value);
+}
+
+function convertToBoolean(value) {
+  return Boolean(value);
+}
+
+function extractIntegerValue(value) {
+  return Number.parseInt(value, 10);
+}
+
+function extractDecimalValue(value) {
+  return Number.parseFloat(value);
+}
+
+function fixAdditionBug(price, quantity) {
+  return Number(price) + Number(quantity);
+}
+
+function checkNaNValue(value) {
+  return Number.isNaN(Number(value));
+}
+
+function convertNumericStrings(values) {
+  return values.map(Number);
+}
+
+function roundNumber(value) {
+  return {
+    round: Math.round(value),
+    floor: Math.floor(value),
+    ceil: Math.ceil(value),
+  };
+}
+
+function randomNumberInRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function rollDice() {
+  return randomNumberInRange(1, 6);
+}
+
+function findLargestInArray(numbers) {
+  return Math.max(...numbers);
+}
+
+function squareRootsUpTo(limit) {
+  const results = [];
+
+  for (let index = 1; index <= limit; index += 1) {
+    results.push({
+      number: index,
+      squareRoot: Number(Math.sqrt(index).toFixed(2)),
+    });
+  }
+
+  return results;
+}
+
+function generateOtp(length) {
+  const digits = "0123456789";
+  let otp = "";
+
+  for (let index = 0; index < length; index += 1) {
+    otp += digits[randomNumberInRange(0, digits.length - 1)];
+  }
+
+  return otp;
+}
+
+function checkGuess(guess, secretNumber) {
+  if (guess === secretNumber) {
+    return "Correct guess";
+  }
+
+  return guess < secretNumber ? "Too low" : "Too high";
+}
+
+function averageOfRandomNumbers(count, min, max) {
+  const numbers = Array.from({ length: count }, () =>
+    randomNumberInRange(min, max),
+  );
+  const total = numbers.reduce((sum, current) => sum + current, 0);
+
+  return {
+    numbers,
+    average: Number((total / numbers.length).toFixed(2)),
+  };
+}
+
+function demonstrateGlobalScope() {
+  return `Inside function: ${window.globalLabMessage}`;
+}
+
+function demonstrateFunctionScope() {
+  const scopedMessage = "I live only inside this function";
+  return scopedMessage;
+}
+
+function demonstrateBlockScope() {
+  let blockMessage;
+
+  {
+    let localMessage = "I exist only inside this block";
+    blockMessage = localMessage;
+  }
+
+  return blockMessage;
+}
+
+function demonstrateVarVsLet() {
+  const results = {};
+
+  if (true) {
+    var legacyValue = "var is function-scoped";
+    let modernValue = "let is block-scoped";
+    results.insideBlock = `${legacyValue} | ${modernValue}`;
+  }
+
+  results.outsideBlockWithVar = legacyValue;
+  results.outsideBlockWithLet = "ReferenceError: modernValue is not defined";
+
+  return results;
+}
+
+function demonstrateScopeChain() {
+  const outerMessage = "outer";
+
+  function middle() {
+    const middleMessage = "middle";
+
+    function inner() {
+      const innerMessage = "inner";
+      return `${outerMessage} > ${middleMessage} > ${innerMessage}`;
+    }
+
+    return inner();
+  }
+
+  return middle();
+}
+
+window.globalLabMessage = "Global variable is accessible here";
+
 window.labSheetData = [
   {
-    id: "q1",
-    title: "Reverse a String",
-    question: "Write a function to reverse a string.",
-    explanation: "Uses split, reverse, and join to transform the text.",
-    code: `function reverseString(value) {
-	return value.split('').reverse().join('');
-}
+    section: "Type Conversion",
+    id: "type-conversion-1",
+    title: "Convert string to number and add 50",
+    question:
+      'Convert the following string into a number and add 50. let salary = "500";',
+    explanation: "Use Number() to convert the string before adding.",
+    code: `let salary = '500';
 
-reverseString('JavaScript');`,
+const total = Number(salary) + 50;
+console.log(total);`,
+    output: () => generateOutput('Number("500") + 50', toNumber("500") + 50),
+  },
+  {
+    section: "Type Conversion",
+    id: "type-conversion-2",
+    title: "Convert number to string",
+    question: "Convert this number into a string and display: let marks = 95;",
+    explanation: "Use String() to convert the number into text.",
+    code: `let marks = 95;
+
+const marksText = String(marks);
+console.log(marksText);`,
+    output: () => generateOutput("String(95)", toStringValue(95)),
+  },
+  {
+    section: "Type Conversion",
+    id: "type-conversion-3",
+    title: "Convert values to booleans",
+    question:
+      'Convert these values into booleans and print the results: 0, 1, "", "Hello", null, undefined',
+    explanation: "Boolean() reveals which values are truthy and falsy.",
+    code: `console.log(Boolean(0));
+console.log(Boolean(1));
+console.log(Boolean(''));
+console.log(Boolean('Hello'));
+console.log(Boolean(null));
+console.log(Boolean(undefined));`,
     output: () =>
-      generateOutput(
-        'reverseString("JavaScript")',
-        reverseString("JavaScript"),
-      ),
+      generateOutput("Boolean conversions", [
+        convertToBoolean(0),
+        convertToBoolean(1),
+        convertToBoolean(""),
+        convertToBoolean("Hello"),
+        convertToBoolean(null),
+        convertToBoolean(undefined),
+      ]),
   },
   {
-    id: "q2",
-    title: "Factorial",
-    question: "Create a function that returns the factorial of a number.",
-    explanation: "Uses an iterative loop so the output is easy to follow.",
-    code: `function calculateFactorial(number) {
-	let result = 1;
-
-	for (let index = 2; index <= number; index += 1) {
-		result *= index;
-	}
-
-	return result;
-}
-
-calculateFactorial(6);`,
-    output: () =>
-      generateOutput("calculateFactorial(6)", calculateFactorial(6)),
-  },
-  {
-    id: "q3",
-    title: "Prime Checker",
-    question: "Check whether a given number is prime.",
-    explanation: "Stops early once a divisor is found.",
-    code: `function isPrime(number) {
-	if (number < 2) {
-		return false;
-	}
-
-	for (let divisor = 2; divisor * divisor <= number; divisor += 1) {
-		if (number % divisor === 0) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-isPrime(29);`,
-    output: () => generateOutput("isPrime(29)", isPrime(29)),
-  },
-  {
-    id: "q4",
-    title: "Count Vowels",
-    question: "Count the vowels in a string.",
-    explanation: "Uses a regular expression to collect every vowel match.",
-    code: `function countVowels(text) {
-	const matches = text.match(/[aeiou]/gi);
-	return matches ? matches.length : 0;
-}
-
-countVowels('Frontend Fundamentals');`,
-    output: () =>
-      generateOutput(
-        'countVowels("Frontend Fundamentals")',
-        countVowels("Frontend Fundamentals"),
-      ),
-  },
-  {
-    id: "q5",
-    title: "Capitalize Words",
-    question: "Convert each word in a sentence to title case.",
-    explanation: "Normalizes case first, then capitalizes each word.",
-    code: `function capitalizeWords(sentence) {
-	return sentence
-		.toLowerCase()
-		.split(' ')
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ');
-}
-
-capitalizeWords('learn javascript deeply');`,
-    output: () =>
-      generateOutput(
-        'capitalizeWords("learn javascript deeply")',
-        capitalizeWords("learn javascript deeply"),
-      ),
-  },
-  {
-    id: "q6",
-    title: "Largest Number",
-    question: "Find the largest number in an array.",
-    explanation: "Leverages Math.max with spread syntax.",
-    code: `function findLargestNumber(numbers) {
-	return Math.max(...numbers);
-}
-
-findLargestNumber([12, 45, 7, 91, 18]);`,
-    output: () =>
-      generateOutput(
-        "findLargestNumber([12, 45, 7, 91, 18])",
-        findLargestNumber([12, 45, 7, 91, 18]),
-      ),
-  },
-  {
-    id: "q7",
-    title: "Remove Duplicates",
-    question: "Remove duplicate values from an array.",
-    explanation: "Creates a Set and spreads it back to an array.",
-    code: `function removeDuplicates(numbers) {
-	return [...new Set(numbers)];
-}
-
-removeDuplicates([1, 1, 2, 3, 3, 4, 5]);`,
-    output: () =>
-      generateOutput(
-        "removeDuplicates([1, 1, 2, 3, 3, 4, 5])",
-        removeDuplicates([1, 1, 2, 3, 3, 4, 5]),
-      ),
-  },
-  {
-    id: "q8",
-    title: "Flatten Array",
-    question: "Flatten a nested array into a single level array.",
-    explanation: "Uses flat(Infinity) so deeply nested arrays are supported.",
-    code: `function flattenArray(values) {
-	return values.flat(Infinity);
-}
-
-flattenArray([1, [2, [3, 4]], 5]);`,
-    output: () =>
-      generateOutput(
-        "flattenArray([1, [2, [3, 4]], 5])",
-        flattenArray([1, [2, [3, 4]], 5]),
-      ),
-  },
-  {
-    id: "q9",
-    title: "Average",
-    question: "Calculate the average of a list of numbers.",
-    explanation: "Adds the values with reduce and divides by the array length.",
-    code: `function calculateAverage(numbers) {
-	const total = numbers.reduce((sum, current) => sum + current, 0);
-	return total / numbers.length;
-}
-
-calculateAverage([10, 20, 30, 40]);`,
-    output: () =>
-      generateOutput(
-        "calculateAverage([10, 20, 30, 40])",
-        calculateAverage([10, 20, 30, 40]),
-      ),
-  },
-  {
-    id: "q10",
-    title: "Fibonacci",
-    question: "Generate the Fibonacci sequence up to a limit.",
+    section: "Type Conversion",
+    id: "type-conversion-4",
+    title: "Extract integer value",
+    question: 'Extract only the integer value: let value = "250px";',
     explanation:
-      "Builds the sequence iteratively until the next number exceeds the limit.",
-    code: `function buildFibonacciSequence(limit) {
-	const sequence = [0, 1];
+      "parseInt stops reading when it reaches the non-numeric suffix.",
+    code: `let value = '250px';
 
-	while (sequence[sequence.length - 1] + sequence[sequence.length - 2] <= limit) {
-		sequence.push(sequence[sequence.length - 1] + sequence[sequence.length - 2]);
-	}
-
-	return sequence;
-}
-
-buildFibonacciSequence(50);`,
+const integerValue = Number.parseInt(value, 10);
+console.log(integerValue);`,
     output: () =>
-      generateOutput("buildFibonacciSequence(50)", buildFibonacciSequence(50)),
+      generateOutput('parseInt("250px", 10)', extractIntegerValue("250px")),
   },
   {
-    id: "q11",
-    title: "Sort Numbers",
-    question: "Sort an array of numbers in ascending order.",
-    explanation: "Uses a numeric comparator so values sort correctly.",
-    code: `function sortNumbersAscending(numbers) {
-	return [...numbers].sort((left, right) => left - right);
-}
+    section: "Type Conversion",
+    id: "type-conversion-5",
+    title: "Extract decimal value",
+    question: 'Extract the decimal number: let price = "99.99USD";',
+    explanation: "parseFloat keeps the decimal portion and ignores the suffix.",
+    code: `let price = '99.99USD';
 
-sortNumbersAscending([34, 7, 23, 32, 5, 62]);`,
+const decimalValue = Number.parseFloat(price);
+console.log(decimalValue);`,
+    output: () =>
+      generateOutput('parseFloat("99.99USD")', extractDecimalValue("99.99USD")),
+  },
+  {
+    section: "Type Conversion",
+    id: "type-conversion-6",
+    title: "Fix the addition bug",
+    question:
+      'Fix the bug and calculate the total: let price = "100"; let quantity = "5"; console.log(price + quantity);',
+    explanation:
+      "Convert both values to numbers before adding so the result is numeric addition.",
+    code: `let price = '100';
+let quantity = '5';
+
+console.log(Number(price) + Number(quantity));`,
+    output: () =>
+      generateOutput('Number("100") + Number("5")', fixAdditionBug("100", "5")),
+  },
+  {
+    section: "Type Conversion",
+    id: "type-conversion-7",
+    title: "Check for NaN",
+    question: "Write a program that checks whether a converted value is NaN.",
+    explanation: "Use Number.isNaN() after converting the input.",
+    code: `const input = 'hello';
+const convertedValue = Number(input);
+
+console.log(Number.isNaN(convertedValue));`,
+    output: () =>
+      generateOutput('Number.isNaN(Number("hello"))', checkNaNValue("hello")),
+  },
+  {
+    section: "Type Conversion",
+    id: "type-conversion-8",
+    title: "Convert numeric strings to numbers",
+    question:
+      'Convert an array of numeric strings into numbers. ["10", "20", "30", "40"]',
+    explanation: "Map each string through Number() to get a numeric array.",
+    code: `const values = ['10', '20', '30', '40'];
+
+const numbers = values.map(Number);
+console.log(numbers);`,
     output: () =>
       generateOutput(
-        "sortNumbersAscending([34, 7, 23, 32, 5, 62])",
-        sortNumbersAscending([34, 7, 23, 32, 5, 62]),
+        "map(Number)",
+        convertNumericStrings(["10", "20", "30", "40"]),
       ),
   },
   {
-    id: "q12",
-    title: "Object Summary",
-    question: "Read a simple summary from an object and format it for display.",
+    section: "Math Methods",
+    id: "math-methods-1",
+    title: "Round numbers",
+    question:
+      "Round the following number using: let num = 7.8; Math.round(), Math.floor(), Math.ceil()",
     explanation:
-      "Shows how to expose a function that returns structured output.",
-    code: `function generateOutput(label, value) {
-	return {
-		label,
-		value,
-	};
+      "Shows the difference between rounding down, up, and to the nearest integer.",
+    code: `let num = 7.8;
+
+console.log(Math.round(num));
+console.log(Math.floor(num));
+console.log(Math.ceil(num));`,
+    output: () => generateOutput("Math rounding", roundNumber(7.8)),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-2",
+    title: "Random number between 50 and 100",
+    question: "Generate a random number between 50–100.",
+    explanation:
+      "Random integers in the requested range are generated with Math.random().",
+    code: `const randomValue = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+console.log(randomValue);`,
+    output: () => generateOutput("Random 50-100", randomNumberInRange(50, 100)),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-3",
+    title: "Dice roll simulator",
+    question: "Create a dice roll simulator. Expected output: 1–6",
+    explanation: "Uses a random integer between 1 and 6.",
+    code: `const dice = Math.floor(Math.random() * 6) + 1;
+console.log(dice);`,
+    output: () => generateOutput("Dice roll", rollDice()),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-4",
+    title: "Largest number in array",
+    question: "Find the largest number from this array: [10, 45, 2, 99, 23]",
+    explanation: "Math.max works directly with spread syntax.",
+    code: `const values = [10, 45, 2, 99, 23];
+
+console.log(Math.max(...values));`,
+    output: () =>
+      generateOutput(
+        "Math.max(...[10, 45, 2, 99, 23])",
+        findLargestInArray([10, 45, 2, 99, 23]),
+      ),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-5",
+    title: "Square roots from 1 to 20",
+    question: "Calculate the square root of numbers from 1–20 using a loop.",
+    explanation: "Builds a list of each number with its square root.",
+    code: `for (let i = 1; i <= 20; i += 1) {
+  console.log(i, Math.sqrt(i));
+}`,
+    output: () => generateOutput("Square roots 1-20", squareRootsUpTo(20)),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-6",
+    title: "Generate 6-digit OTP",
+    question: "Generate a 6-digit OTP using Math.random().",
+    explanation: "Creates six random digits and joins them into a string.",
+    code: `let otp = '';
+
+for (let i = 0; i < 6; i += 1) {
+  otp += Math.floor(Math.random() * 10);
 }
 
-generateOutput('Lab status', 'Ready');`,
-    output: () => generateOutput("Lab status", "Ready"),
+console.log(otp);`,
+    output: () => generateOutput("6-digit OTP", generateOtp(6)),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-7",
+    title: "Number guessing logic",
+    question: "Create a number guessing game logic.",
+    explanation: "Compares a guess with a secret number and returns a hint.",
+    code: `const secretNumber = 42;
+const guess = 30;
+
+if (guess === secretNumber) {
+  console.log('Correct guess');
+} else if (guess < secretNumber) {
+  console.log('Too low');
+} else {
+  console.log('Too high');
+}`,
+    output: () => generateOutput("Guess 30 vs secret 42", checkGuess(30, 42)),
+  },
+  {
+    section: "Math Methods",
+    id: "math-methods-8",
+    title: "Average of random numbers",
+    question: "Find the average of random numbers generated by JavaScript.",
+    explanation:
+      "Generates a batch of random values and calculates the average.",
+    code: `const numbers = Array.from({ length: 5 }, () => Math.floor(Math.random() * 100));
+const average = numbers.reduce((sum, current) => sum + current, 0) / numbers.length;
+
+console.log(numbers, average);`,
+    output: () =>
+      generateOutput(
+        "Average of random numbers",
+        averageOfRandomNumbers(5, 1, 100),
+      ),
+  },
+  {
+    section: "Scope",
+    id: "scope-1",
+    title: "Global variable access",
+    question: "Create a global variable and access it inside a function.",
+    explanation: "A function can read variables declared in the global scope.",
+    code: `let globalMessage = 'I am global';
+
+function showGlobalMessage() {
+  console.log(globalMessage);
+}
+
+showGlobalMessage();`,
+    output: () => generateOutput("Global scope", demonstrateGlobalScope()),
+  },
+  {
+    section: "Scope",
+    id: "scope-2",
+    title: "Function scope",
+    question:
+      "Create a function-scoped variable and try accessing it outside the function.",
+    explanation:
+      "Function-scoped values are not visible outside the function body.",
+    code: `function testScope() {
+  var functionMessage = 'Inside function only';
+  console.log(functionMessage);
+}
+
+testScope();
+// console.log(functionMessage);`,
+    output: () => generateOutput("Function scope", demonstrateFunctionScope()),
+  },
+  {
+    section: "Scope",
+    id: "scope-3",
+    title: "Block scope with let",
+    question:
+      "Create a block-scoped variable using let and test accessibility outside the block.",
+    explanation:
+      "let respects block scope, so it cannot be read outside the block.",
+    code: `{
+  let blockMessage = 'Block only';
+  console.log(blockMessage);
+}
+
+// console.log(blockMessage);`,
+    output: () => generateOutput("Block scope", demonstrateBlockScope()),
+  },
+  {
+    section: "Scope",
+    id: "scope-4",
+    title: "var vs let inside if block",
+    question:
+      "Demonstrate the difference between var and let inside an if block.",
+    explanation: "var leaks outside the block, while let stays confined to it.",
+    code: `if (true) {
+  var legacyValue = 'var is function-scoped';
+  let modernValue = 'let is block-scoped';
+  console.log(legacyValue);
+  console.log(modernValue);
+}
+
+console.log(legacyValue);
+// console.log(modernValue);`,
+    output: () => generateOutput("var vs let", demonstrateVarVsLet()),
+  },
+  {
+    section: "Scope",
+    id: "scope-5",
+    title: "Nested functions and scope chain",
+    question: "Create nested functions and demonstrate scope chain.",
+    explanation: "Inner functions can access variables from every outer scope.",
+    code: `function outer() {
+  const outerValue = 'outer';
+
+  function middle() {
+    const middleValue = 'middle';
+
+    function inner() {
+      const innerValue = 'inner';
+      console.log(outerValue, middleValue, innerValue);
+    }
+
+    inner();
+  }
+
+  middle();
+}
+
+outer();`,
+    output: () => generateOutput("Scope chain", demonstrateScopeChain()),
   },
 ];
