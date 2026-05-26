@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Core Concepts LabSheet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+            boxShadow: {
+              glow: "0 0 0 1px rgba(255,255,255,0.08), 0 20px 60px rgba(15,23,42,0.45)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="answers.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body
+    class="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-300 selection:text-slate-950"
+  >
+    <div class="page-bg"></div>
+
+    <main
+      class="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+    >
+      <section
+        class="hero-card overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-glow backdrop-blur-xl sm:p-8 lg:p-10"
+      >
+        <div class="grid gap-8 lg:grid-cols-[1.4fr_0.9fr] lg:items-end">
+          <div>
+            <div
+              class="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-200"
+            >
+              JavaScript LabSheet
+            </div>
+            <h1
+              class="max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl"
+            >
+              Questions, answers, and live outputs in one polished study
+              dashboard.
+            </h1>
+            <p
+              class="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg"
+            >
+              Explore each lab question, inspect the answer code, and see the
+              output generated directly from the functions in
+              <span class="font-semibold text-white">answers.js</span>.
+            </p>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <div class="stat-card">
+              <span class="stat-label">Questions</span>
+              <strong id="questionCount" class="stat-value">0</strong>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Answer functions</span>
+              <strong id="functionCount" class="stat-value">0</strong>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Live outputs</span>
+              <strong id="outputCount" class="stat-value">0</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <aside
+          class="rounded-[1.75rem] border border-white/10 bg-slate-900/70 p-5 shadow-glow backdrop-blur-xl"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p
+                class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200/80"
+              >
+                Navigator
+              </p>
+              <h2 class="mt-1 text-xl font-bold text-white">Question list</h2>
+            </div>
+          </div>
+          <nav id="questionNav" class="mt-5 space-y-2"></nav>
+        </aside>
+
+        <section class="space-y-5">
+          <div
+            class="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl"
+          >
+            <div
+              class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+            >
+              <div>
+                <p
+                  class="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200/80"
+                >
+                  Overview
+                </p>
+                <h2 class="mt-1 text-2xl font-bold text-white">
+                  Rendered from answer functions
+                </h2>
+              </div>
+              <p class="max-w-2xl text-sm leading-6 text-slate-300">
+                The page is data-driven, so each card is generated from the
+                question definitions in
+                <span class="font-semibold text-white">answers.js</span> and
+                updated by
+                <span class="font-semibold text-white">script.js</span>.
+              </p>
+            </div>
+          </div>
+
+          <div id="questionBoard" class="space-y-5"></div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
